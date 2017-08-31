@@ -1,11 +1,10 @@
 package com.summercollab.survey.api;
 
-import com.summercollab.survey.api.models.Questions;
+
+import com.summercollab.survey.services.Repositories.Entities.Questions;
 import com.summercollab.survey.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +28,19 @@ public class SurveyController {
     @RequestMapping(method= RequestMethod.GET,value="/api/v1/questions")
     public List<Questions> getQuestions() {
 
-        return surveyService.getQuestions();
+        return surveyService.getAllQuestions();
+    }
+
+    @RequestMapping(method=RequestMethod.GET,value="/api/v1/questions/{questionId}")
+    public Questions getQuestions(@PathVariable  Integer questionId){
+
+        return surveyService.getQuestions(questionId);
+
+    }
+
+    @RequestMapping(method=RequestMethod.POST,value="/api/v1/questions")
+    public void addQuestion(@RequestBody Questions questions ){
+        surveyService.saveQuestions(questions);
+
     }
 }

@@ -1,7 +1,10 @@
 package com.summercollab.survey.services;
 
-import com.summercollab.survey.api.models.Questions;
+
+import com.summercollab.survey.services.Repositories.Entities.Questions;
+import com.summercollab.survey.services.Repositories.Entities.QuestionsRepository;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -17,6 +20,9 @@ import java.util.List;
 @Service
 public class SurveyService {
 
+  @Autowired
+  QuestionsRepository questionsRepository;
+
   private static Logger logger = Logger.getLogger(SurveyService.class);
 
 
@@ -24,7 +30,37 @@ public class SurveyService {
         return "Stay Tuned we are working on it !!!";
     }
 
-    public List<Questions> getQuestions()  {
+    public List<Questions> getAllQuestions()  {
+
+        List<Questions> questionsList = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        Date createdDate = null;
+        try {
+            createdDate = df.parse("01-01-2017");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        questionsRepository.findAll()
+        .forEach(questionsList::add);
+
+        return questionsList;
+
+    }
+
+     public void saveQuestions(Questions questions) {
+
+        questionsRepository.save(questions);
+
+     }
+
+     public Questions getQuestions(Integer questionId) {
+        return questionsRepository.findOne(questionId);
+     }
+
+    /*public List<Questions> getQuestions()  {
 
         List<Questions> questionsList = new ArrayList<>();
 
@@ -48,5 +84,5 @@ public class SurveyService {
 //        logger.info(questionsList);
         return questionsList;
 
-    }
+    }*/
 }

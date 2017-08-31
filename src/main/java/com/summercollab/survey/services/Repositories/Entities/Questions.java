@@ -1,13 +1,15 @@
-package com.summercollab.survey.api.models;
-
+package com.summercollab.survey.services.Repositories.Entities;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Created by sreeram.srini on 8/26/17.
+ * Created by sreeram.srini on 8/30/17.
  */
-
+@Entity
 public class Questions {
 
+    @Id
     private Integer questionId;
     private Integer categoryId;
     private String questionTxt;
@@ -20,6 +22,9 @@ public class Questions {
         this.questionTxt = questionTxt;
         this.createdDate = createdDate;
         this.expiredDate = expiredDate;
+    }
+
+    public Questions() {
     }
 
     @Override
@@ -73,3 +78,4 @@ public class Questions {
         this.expiredDate = expiredDate;
     }
 }
+
